@@ -8,9 +8,17 @@ class HomePage(BasePage):
     SEARCH_BUTTON = (By.XPATH, "//a[@aria-label='Search']")
     SEARCH_INPUT = (By.XPATH, "//input[@type='search']")
     STREAMER_CARD = (By.XPATH, "//a[contains(@href, '/')]")
+    KEEP_USING_WEB = (By.XPATH, "//button[p[normalize-space()='Keep using web']]")
+    EMPTY_OVERLAY = (By.XPATH, "//div[contains(@class,'ScTouchActionFilter')]")
 
     def open(self, url):
         self.driver.get(url)
+
+    def click_keep_using_web(self):
+        self.driver.find_element(*self.KEEP_USING_WEB).click()
+
+    def click_empty_overlay(self):
+        self.driver.find_element(*self.EMPTY_OVERLAY).click()
 
     def click_search(self):
         self.wait_for_clickable(self.SEARCH_BUTTON).click()
