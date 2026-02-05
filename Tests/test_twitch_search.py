@@ -11,8 +11,10 @@ def test_search_and_open_streamer(driver):
     home_page.click_empty_overlay()
     home_page.click_search()
     home_page.search_for_game("StarCraft II")
+    home_page.click_first_search_result_with_text("StarCraft II")
+    home_page.scroll_down()
+    home_page.scroll_down()
     home_page.scroll_and_select_streamer()
-
 
     streamer_page.wait_until_loaded()
     streamer_page.capture_screenshot("test_search_and_open_streamer")

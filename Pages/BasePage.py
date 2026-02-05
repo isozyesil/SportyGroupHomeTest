@@ -17,3 +17,5 @@ class BasePage:
         return self.wait.until(
             EC.element_to_be_clickable(locator)
         )
+
+

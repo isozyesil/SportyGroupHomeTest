@@ -1,12 +1,17 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 from Pages.BasePage import BasePage
 from Utils.Scrolling import scroll_down
+from selenium.webdriver.support import expected_conditions as EC
+
 
 
 class HomePage(BasePage):
 
-    SEARCH_BUTTON = (By.XPATH, "//a[@aria-label='Search']")
-    SEARCH_INPUT = (By.XPATH, "//input[@type='search']")
+    BROWSE_BUTTON =(By.XPATH, "//a[.//div[normalize-space()='Browse']]")
+    SEARCH_TEXTBOX =(By.XPATH, "//input[@type='search' and @placeholder='Search']")
+    SEARCH_RESULTS = (By.XPATH,"//ul//li//a[contains(@href,'/directory')]")
+
     STREAMER_CARD = (By.XPATH, "//a[contains(@href, '/')]")
     KEEP_USING_WEB = (By.XPATH, "//button[p[normalize-space()='Keep using web']]")
     EMPTY_OVERLAY = (By.XPATH, "//div[contains(@class,'ScTouchActionFilter')]")
@@ -21,13 +26,35 @@ class HomePage(BasePage):
         self.driver.find_element(*self.EMPTY_OVERLAY).click()
 
     def click_search(self):
-        self.wait_for_clickable(self.SEARCH_BUTTON).click()
+        self.wait_for_clickable(self.BROWSE_BUTTON).click()
 
     def search_for_game(self, game_name):
-        search_input = self.wait_for_visibility(self.SEARCH_INPUT)
+        self._click_search_box()
+        search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)
         search_input.clear()
         search_input.send_keys(game_name)
 
     def scroll_and_select_streamer(self):
         scroll_down(self.driver, times=2)
         self.wait_for_clickable(self.STREAMER_CARD).click()
+
+    def scroll_down(self):
+        self.driver.execute_script("window.scrollBy(0, 500);")
+
+    def click_search_box(self):
+        search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)
+        search_input.click()
+
+    def _click_search_box(self):
+        search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)
+        search_input.click()
+
+    def click_first_search_result_with_text(self, expected_text):
+        results = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located(self.SEARCH_RESULTS))
+        for result in results:
+            if expected_text.lower() in result.text.lower():
+                result.click()
+                return
+        raise AssertionError(f"No search result contains text: {expected_text}")
+
+
