@@ -1,7 +1,8 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from Core.Config import Config
+from core.config import Config
+
 
 @pytest.fixture
 def driver():
