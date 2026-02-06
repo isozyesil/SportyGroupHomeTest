@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.base_page import BasePage
-from utils.scrolling_utils import scroll_down
 from selenium.webdriver.support import expected_conditions as EC
 
 
@@ -16,9 +15,6 @@ class HomePage(BasePage):
     def open(self, url):
         self.driver.get(url)
 
-    def click_keep_using_web(self):
-        self.driver.find_element(*self.KEEP_USING_WEB).click()
-
     def click_empty_overlay(self):
         self.driver.find_element(*self.EMPTY_OVERLAY).click()
 
@@ -31,14 +27,6 @@ class HomePage(BasePage):
         search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)
         search_input.clear()
         search_input.send_keys(game_name)
-
-    def scroll_and_select_streamer(self):
-        scroll_down(self.driver, times=2)
-        self.wait_for_clickable(self.STREAMER_CARD).click()
-
-    def click_search_box(self):
-        search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)
-        search_input.click()
 
     def _click_search_box(self):
         search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)

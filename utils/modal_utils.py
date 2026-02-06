@@ -23,8 +23,6 @@ def dismiss_modal_if_present(driver, timeout=5):
 
     except TimeoutException:
         pass
-
-
     try:
         wait.until(
             EC.element_to_be_clickable(GENERIC_CLOSE_BUTTON)

@@ -9,8 +9,8 @@ def test_search_and_open_streamer(driver):
     home_page.open(Config.BASE_URL)  # Go to Twitch
     home_page.click_empty_overlay()  # Exit from Browser Suggestion or Downloading App
     home_page.click_search()  # Click on Browser Button
-    home_page.search_for_game("StarCraft II")  # Search for Starcraft
-    home_page.click_first_search_result_with_text("StarCraft II")  # Pick First Result that Matches with "Starcraft II"
+    home_page.search_for_game("Hunt")  # Search for Starcraft
+    home_page.click_first_search_result_with_text("Hunt")  # Pick First Result that Matches with "Starcraft II"
     home_page.scroll_down()  # First Scroll Down
     home_page.scroll_down()
     home_page.scroll_down()
