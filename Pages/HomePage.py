@@ -11,10 +11,10 @@ class HomePage(BasePage):
     BROWSE_BUTTON =(By.XPATH, "//a[.//div[normalize-space()='Browse']]")
     SEARCH_TEXTBOX =(By.XPATH, "//input[@type='search' and @placeholder='Search']")
     SEARCH_RESULTS = (By.XPATH,"//ul//li//a[contains(@href,'/directory')]")
-
     STREAMER_CARD = (By.XPATH, "//a[contains(@href, '/')]")
     KEEP_USING_WEB = (By.XPATH, "//button[p[normalize-space()='Keep using web']]")
     EMPTY_OVERLAY = (By.XPATH, "//div[contains(@class,'ScTouchActionFilter')]")
+
 
     def open(self, url):
         self.driver.get(url)
@@ -26,6 +26,7 @@ class HomePage(BasePage):
         self.driver.find_element(*self.EMPTY_OVERLAY).click()
 
     def click_search(self):
+        self.wait_for_visibility(self.BROWSE_BUTTON)
         self.wait_for_clickable(self.BROWSE_BUTTON).click()
 
     def search_for_game(self, game_name):
@@ -37,9 +38,6 @@ class HomePage(BasePage):
     def scroll_and_select_streamer(self):
         scroll_down(self.driver, times=2)
         self.wait_for_clickable(self.STREAMER_CARD).click()
-
-    def scroll_down(self):
-        self.driver.execute_script("window.scrollBy(0, 500);")
 
     def click_search_box(self):
         search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)
