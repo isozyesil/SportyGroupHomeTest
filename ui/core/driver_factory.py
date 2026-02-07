@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from core.config import Config
+from ui.core.ui_config import Config
 
 
 def create_driver():

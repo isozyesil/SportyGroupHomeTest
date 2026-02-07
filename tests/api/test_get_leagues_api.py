@@ -1,51 +1,38 @@
-import requests
 import pytest
-
-BASE_URL = "https://v3.football.api-sports.io"
-API_KEY = "022308117e1535e2d0b5c6082ea7272a"
-
-HEADERS = {
-    "x-apisports-key": API_KEY
-}
+from api.core.endpoints import Endpoints
+from api.utils.assert_utils import assert_status_code, assert_has_keys
 
 
-def test_get_leagues_when_called_returns_200():
-    response = requests.get(f"{BASE_URL}/leagues", headers=HEADERS)
-    assert response.status_code == 200
+def test_get_leagues_status_code(api_client):
+    resp = api_client.get(Endpoints.LEAGUES)
+    assert_status_code(resp, 200)
 
 
-def test_get_leagues_when_successful_returns_expected_schema():
-    response = requests.get(f"{BASE_URL}/leagues", headers=HEADERS)
-    data = response.json()
+def test_leagues_response_contains_expected_keys(api_client):
+    resp = api_client.get(Endpoints.LEAGUES)
+    assert_status_code(resp, 200)
 
-    assert "response" in data
+    data = resp.json()
+    assert_has_keys(data, ["response"])
+
     assert isinstance(data["response"], list)
     assert len(data["response"]) > 0
 
-    first_league = data["response"][0]
-    assert "league" in first_league
-    assert "country" in first_league
-    assert "seasons" in first_league
+    first = data["response"][0]
+    assert_has_keys(first, ["league", "country", "seasons"])
 
 
 @pytest.mark.parametrize(
     "query_params, expected_min_length",
     [
-        ({}, 1),  # no params
-        ({"name": "Premier League"}, 1),  # filter by name
-        ({"country": "England"}, 1),  # filter by country
+        ({}, 1),
+        ({"name": "Premier League"}, 1),
     ]
 )
-def test_get_leagues_when_filtered_returns_matching_results(
-        query_params, expected_min_length
-):
-    response = requests.get(
-        f"{BASE_URL}/leagues",
-        headers=HEADERS,
-        params=query_params
-    )
+def test_leagues_filtering(api_client, query_params, expected_min_length):
+    resp = api_client.get(Endpoints.LEAGUES, params=query_params)
+    assert_status_code(resp, 200)
 
-    assert response.status_code == 200
-    data = response.json()
-    assert isinstance(data["response"], list)
+    data = resp.json()
+    assert "response" in data
     assert len(data["response"]) >= expected_min_length

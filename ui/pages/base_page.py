@@ -1,6 +1,6 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from utils.modal_utils import dismiss_modal_if_present
+from ui.utils.modal_utils import dismiss_modal_if_present
 
 
 class BasePage:

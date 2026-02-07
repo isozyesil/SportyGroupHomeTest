@@ -1,8 +1,8 @@
 import random
 from selenium.webdriver.common.by import By
-from pages.base_page import BasePage
-from utils.modal_utils import dismiss_modal_if_present
-from utils.screenshot_utils import take_screenshot
+from ui.pages.base_page import BasePage
+from ui.utils.modal_utils import dismiss_modal_if_present
+from ui.utils.screenshot_utils import take_screenshot
 from selenium.webdriver.common.action_chains import ActionChains
 
 

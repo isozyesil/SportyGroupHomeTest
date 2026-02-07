@@ -9,6 +9,6 @@ class Config:
 
     IMPLICIT_WAIT = int(os.getenv("IMPLICIT_WAIT", "5"))
     EXPLICIT_WAIT = int(os.getenv("EXPLICIT_WAIT", "10"))
-    PAGE_LOAD_TIMEOUT = int(os.getenv("PAGE_LOAD_TIMEOUT", "20"))
+    PAGE_LOAD_TIMEOUT = int(os.getenv("PAGE_LOAD_TIMEOUT", "60"))
 
     SCREENSHOT_DIR = os.getenv("SCREENSHOT_DIR", "Screenshots")

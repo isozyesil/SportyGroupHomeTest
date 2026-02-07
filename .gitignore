@@ -10,3 +10,11 @@ __pycache__/
 
 # Test artifacts
 Screenshots/
+
+# Local dev
+.venv/
+.idea/
+.pytest_cache/
+__pycache__/
+.DS_Store
+Screenshots/

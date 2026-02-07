@@ -1,6 +1,6 @@
-from core.config import Config
-from pages.home_page import HomePage
-from pages.streamer_page import StreamerPage
+from ui.core.ui_config import Config
+from ui.pages.home_page import HomePage
+from ui.pages.streamer_page import StreamerPage
 
 
 def test_search_and_open_streamer(driver):
