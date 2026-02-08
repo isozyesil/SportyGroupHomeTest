@@ -36,7 +36,7 @@ The framework follows a modular, layered architecture designed for maintainabili
 
 ## 📁 Project Structure
 
-![UI Test Execution](Screenshots/test_execution.gif)
+![UI Test Execution](test_execution.gif)
 
 ```text
 SportyGroupHomeTest/
