@@ -140,7 +140,7 @@ pytest
 ### 💻 Console Results (API + UI)
 ![Terminal Test Execution](terminal_execution.gif)
 
-*Figure 2: Real-time terminal output showing 6 distinct API test scenarios and unified results.*
+*Figure 2: Real-time terminal output showing 6 distinct API test scenarios and 1 UI test flow (7 items total).*
 
 ```text
 ============================= test session starts ==============================
