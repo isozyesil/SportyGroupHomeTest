@@ -165,6 +165,7 @@ We employ a multi-layered validation strategy to ensure both functional correctn
 
 ### 1. Visual & State Validation (UI)
 - **Playback Verification**: Instead of just checking for page load, we verify the presence of the video player component to ensure the primary service (streaming) is actually working.
+- **Content Gating**: Automatically handles and dismisses +18 (mature content) modals to ensure uninterrupted test flow.
 - **Evidence Collection**: Automated screenshots provide a visual "audit trail" for every test execution, facilitating rapid root cause analysis if a UI regression occurs.
 - **Dynamic Resilience**: Tests validate that they can navigate through Twitch's dynamic environment, including intermittent overlays and lazy-loaded content.
 
@@ -178,7 +179,7 @@ We employ a multi-layered validation strategy to ensure both functional correctn
 ## 📈 Quality & Reliability Features
 
 -   **Automatic Screenshots**: Every UI test execution captures a timestamped screenshot in the `Screenshots/` directory upon completion or verification.
--   **Resilience**: The framework automatically detects and dismisses intrusive modals that might intercept clicks, reducing test flakiness.
+-   **Resilience**: The framework automatically detects and dismisses intrusive modals (such as +18/mature content gates) that might intercept clicks, reducing test flakiness.
 -   **Standardized Timeouts**: All waits are centralized in `Config`, allowing global tuning of framework performance.
 -   **Detailed Assertions**: Custom assertion messages provide clear feedback on failure causes (e.g., missing JSON keys or incorrect status codes).
 -   **Clean Test Code**: Tests are written in a declarative style, focusing on the "what" rather than the "how" of automation.

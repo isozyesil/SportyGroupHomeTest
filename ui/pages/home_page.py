@@ -7,7 +7,6 @@ class HomePage(BasePage):
     SEARCH_TEXTBOX = (By.XPATH, "//input[@type='search' and @placeholder='Search']")
     SEARCH_RESULTS = (By.XPATH, "//ul//li//a[contains(@href,'/directory')]")
     STREAMER_CARD = (By.XPATH, "//a[contains(@href, '/')]")
-    KEEP_USING_WEB = (By.XPATH, "//button[p[normalize-space()='Keep using web']]")
     EMPTY_OVERLAY = (By.XPATH, "//div[contains(@class,'ScTouchActionFilter')]")
 
     def click_empty_overlay(self):
