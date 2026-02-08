@@ -36,8 +36,6 @@ The framework follows a modular, layered architecture designed for maintainabili
 
 ## 📁 Project Structure
 
-![UI Test Execution](test_execution.gif)
-
 ```text
 SportyGroupHomeTest/
 ├── api/                # API Client and Core Logic
@@ -114,6 +112,32 @@ pytest
 | API-02 | Leagues Schema Validation | `/leagues` | 1. Root contains `response`<br>2. `response` is a non-empty list<br>3. Items contain `league`, `country`, `seasons` | Ensures data integrity and contract adherence for downstream consumers. |
 | API-03 | Leagues Filtering (Default) | `/leagues` | 1. Response without filters returns data<br>2. Response count >= 1 | Verifies that the endpoint returns data correctly without any query parameters. |
 | API-04 | Leagues Filtering (by Name) | `/leagues` | 1. Filter by name returns expected results<br>2. Response count >= 1 | Verifies the query parameter logic and server-side filtering functionality. |
+
+---
+
+## 📊 Test Results
+
+### 📱 UI Test Execution (Twitch Mobile Flow)
+![UI Test Execution](test_execution.gif)
+
+*Figure 1: Automated UI flow showing search, game selection, and stream verification.*
+
+### 💻 Console Results (API + UI)
+![Terminal Test Execution](terminal_execution.gif)
+
+*Figure 2: Real-time terminal output with green status indicators for all passed tests.*
+
+```text
+============================= test session starts ==============================
+platform darwin -- Python 3.12.0, pytest-9.0.2, pluggy-1.6.0
+rootdir: /Users/isozyesil/PycharmProjects/SportyGroupHomeTest
+collected 5 items
+
+tests/api/test_get_leagues_api.py ....                                   [ 80%]
+tests/ui/test_twitch_search_flow.py .                                    [100%]
+
+============================== 5 passed in 48.77s ==============================
+```
 
 ---
 

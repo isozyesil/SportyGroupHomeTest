@@ -2,7 +2,7 @@ from ui import Config
 import pytest
 
 
-@pytest.mark.parametrize("game_name", ["Starcraft II"])
+@pytest.mark.parametrize("game_name", ["StarCraft II"])
 def test_search_and_open_streamer(pages, game_name):
     pages.home_page.search_and_select_game(game_name)
     pages.home_page.scroll_down(times=2)
