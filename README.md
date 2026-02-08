@@ -157,7 +157,7 @@ tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[API-05_Country_
 tests/api/test_get_leagues_api.py::test_api_failure_logging_mechanism PASSED
 tests/ui/test_twitch_search_flow.py::test_search_and_open_streamer[StarCraft II] PASSED
 
-============================== 7 passed in 44.11s ==============================
+============================== 7 passed in 44.68s ==============================
 ```
 
 ---

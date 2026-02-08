@@ -45,20 +45,12 @@ class ApiClient:
 
                 logger.info(f"API RESPONSE: {resp.status_code} ({duration:.2f}s)")
                 
-                should_log_body = resp.status_code >= 400
-                if resp.status_code == 200:
-                    try:
-                        body = resp.json()
-                        if body.get("errors"):
-                            should_log_body = True
-                    except:
-                        pass
-
-                if should_log_body:
-                    try:
-                        logger.error(f"RESPONSE BODY: {json.dumps(resp.json(), indent=2)}")
-                    except:
-                        logger.error(f"RESPONSE TEXT: {resp.text}")
+                # Log response body
+                try:
+                    body = resp.json()
+                    logger.info(f"RESPONSE BODY: {json.dumps(body, indent=2)}")
+                except:
+                    logger.info(f"RESPONSE TEXT: {resp.text}")
 
                 if resp.status_code in (
                         HttpStatus.TOO_MANY_REQUESTS,
