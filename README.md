@@ -108,7 +108,7 @@ pytest
 
 | Test ID | Name | Steps | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
-| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv<br>2. Search for a game (e.g., "Starcraft II")<br>3. Select the game from results<br>4. Scroll down to load more content<br>5. Select a random live streamer | 1. Verify stream is live (Video player loaded)<br>2. Capture verification screenshot | Ensures the core user journey of discovery and playback is functional on mobile web. |
+| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv Mobile Web<br>2. Click 'Browse' (Search) icon<br>3. Search for "StarCraft II"<br>4. Select the game from the search results<br>5. Scroll down to load live streamers<br>6. Click on a random live streamer | 1. Verify stream is live (Video player active)<br>2. Capture verification screenshot | Ensures the core user journey of discovery and playback is functional on mobile web. |
 
 ### 🌐 API Tests (Football API)
 
@@ -116,8 +116,7 @@ pytest
 | :--- | :--- | :--- | :--- | :--- |
 | API-01 | Get Leagues Status Code | `/leagues` | HTTP 200 OK | Basic availability check for the leagues endpoint. |
 | API-02 | Leagues Schema Validation | `/leagues` | 1. Root contains `response`<br>2. `response` is a non-empty list<br>3. Items contain `league`, `country`, `seasons` | Ensures data integrity and contract adherence for downstream consumers. |
-| API-03 | Leagues Filtering (Default) | `/leagues` | 1. Response without filters returns data<br>2. Response count >= 1 | Verifies that the endpoint returns data correctly without any query parameters. |
-| API-04 | Leagues Filtering (by Name) | `/leagues` | 1. Filter by name returns expected results<br>2. Response count >= 1 | Verifies the query parameter logic and server-side filtering functionality. |
+| API-03 | Leagues Filtering | `/leagues` | 1. Returns results without filters<br>2. Returns results when filtered by name (e.g., "Premier League") | Verifies the query parameter logic and server-side filtering functionality. |
 
 ---
 
