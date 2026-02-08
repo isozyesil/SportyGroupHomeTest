@@ -142,12 +142,16 @@ pytest
 ============================= test session starts ==============================
 platform darwin -- Python 3.12.0, pytest-9.0.2, pluggy-1.6.0
 rootdir: /Users/isozyesil/PycharmProjects/SportyGroupHomeTest
+configfile: pytest.ini
 collected 5 items
 
-tests/api/test_get_leagues_api.py ....                                   [ 80%]
-tests/ui/test_twitch_search_flow.py .                                    [100%]
+tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params0-1] PASSED [ 20%]
+tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params1-1] PASSED [ 40%]
+tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params2-1] PASSED [ 60%]
+tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params3-1] PASSED [ 80%]
+tests/ui/test_twitch_search_flow.py::test_search_and_open_streamer[StarCraft II] PASSED [100%]
 
-============================== 5 passed in 48.77s ==============================
+============================== 5 passed in 53.71s ==============================
 ```
 
 ---
