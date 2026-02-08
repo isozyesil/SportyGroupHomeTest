@@ -149,11 +149,21 @@ rootdir: /Users/isozyesil/PycharmProjects/SportyGroupHomeTest
 configfile: pytest.ini
 collected 5 items
 
-tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params0-1] PASSED [ 20%]
-tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params1-1] PASSED [ 40%]
-tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params2-1] PASSED [ 60%]
-tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params3-1] PASSED [ 80%]
-tests/ui/test_twitch_search_flow.py::test_search_and_open_streamer[StarCraft II] PASSED [100%]
+tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[query_params0-1] 
+2026-02-09 00:28:50,915 - INFO - [framework] - STARTING API TEST: test_get_leagues_parametrized[query_params0-1]
+2026-02-09 00:28:50,916 - INFO - [framework] - API REQUEST: GET https://v3.football.api-sports.io/leagues
+2026-02-09 00:28:52,012 - INFO - [framework] - API RESPONSE: 200 (1.10s)
+PASSED
+2026-02-09 00:28:52,143 - INFO - [framework] - ENDING API TEST: test_get_leagues_parametrized[query_params0-1]
+
+... [truncated for brevity] ...
+
+tests/ui/test_twitch_search_flow.py::test_search_and_open_streamer[StarCraft II]
+2026-02-09 00:29:10,123 - INFO - [framework] - STARTING TEST: test_search_and_open_streamer[StarCraft II]
+2026-02-09 00:29:15,456 - INFO - [framework] - Navigating to https://www.twitch.tv
+2026-02-09 00:29:20,789 - INFO - [framework] - Searching and selecting game: StarCraft II
+PASSED
+2026-02-09 00:29:55,123 - INFO - [framework] - ENDING TEST: test_search_and_open_streamer[StarCraft II]
 
 ============================== 5 passed in 53.71s ==============================
 ```
