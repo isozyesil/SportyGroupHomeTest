@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+
+# Pytest
+.pytest_cache/
+
+# Virtual environment
+.venv/
+
+# Test artifacts
+Screenshots/
+
+# Local dev
+.venv/
+.idea/
+.pytest_cache/
+__pycache__/
+.DS_Store
+Screenshots/
+INTERVIEW_PREP.md
+.gitignore
+report.md

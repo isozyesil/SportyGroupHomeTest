@@ -7,6 +7,7 @@ This repository contains the solution for the SportyGroup AQA Home Test. It is a
 The framework provides automated coverage for:
 1.  **UI Testing**: A complete search and discovery flow on Twitch (Mobile View), verifying stream playback and handling dynamic overlays.
 2.  **API Testing**: Validation of the Football API (`v3.football.api-sports.io`), including status codes, JSON schema integrity, and data filtering.
+3.  **Audit & Preparation**: A comprehensive code evaluation report (`report.md`) and interview readiness guide (`INTERVIEW_PREP.md`).
 
 ---
 
@@ -78,6 +79,9 @@ pip install -r requirements.txt
 # Run the full suite (API + UI)
 pytest
 
+# Run tests in parallel (Parallel Execution)
+pytest -n auto
+
 # Run UI tests only (with console output)
 pytest tests/ui -v
 
@@ -143,6 +147,15 @@ tests/ui/test_twitch_search_flow.py .                                    [100%]
 
 ============================== 5 passed in 48.77s ==============================
 ```
+
+---
+
+## 📄 Reports & Preparation
+
+In addition to the test code, this repository includes detailed documentation for evaluation and interview readiness:
+
+- **Code Evaluation Report (`report.md`)**: A professional audit of the framework's Attention to Detail, Problem Solving, Flakiness mitigation, Scalability, Python usage, and Testing approach. Includes numerical scores for each category.
+- **Interview Prep Guide (`INTERVIEW_PREP.md`)**: Technical deep dives, SportyGroup-specific context, and professional responses to 20 curated AQA interview questions.
 
 ---
 
