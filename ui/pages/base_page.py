@@ -4,6 +4,7 @@ from ui.utils.modal_utils import dismiss_modal_if_present
 from ui.utils.wait_utils import wait_until, wait_until_not
 from ui.utils.scrolling_utils import scroll_down as scroll_down_util
 from ui.core.ui_config import Config
+from api.utils.logger import logger
 
 
 class BasePage:
@@ -13,24 +14,30 @@ class BasePage:
         self.timeout = Config.EXPLICIT_WAIT
 
     def find(self, locator, timeout=None):
+        logger.info(f"Finding element: {locator}")
         return self.wait_for_visibility(locator, timeout)
 
     def find_elements(self, locator, timeout=None):
+        logger.info(f"Finding elements: {locator}")
         return self.wait_for_elements(locator, timeout)
 
     def click(self, locator, timeout=None):
+        logger.info(f"Clicking on: {locator}")
         try:
             self.wait_for_clickable(locator, timeout).click()
         except (ElementClickInterceptedException, ElementNotInteractableException):
+            logger.warning(f"Click intercepted for {locator}, attempting modal dismissal")
             dismiss_modal_if_present(self.driver)
             self.wait_for_clickable(locator, timeout).click()
 
     def type(self, locator, text, timeout=None):
+        logger.info(f"Typing '{text}' into: {locator}")
         try:
             element = self.find(locator, timeout)
             element.clear()
             element.send_keys(text)
         except (ElementClickInterceptedException, ElementNotInteractableException):
+            logger.warning(f"Type intercepted for {locator}, attempting modal dismissal")
             dismiss_modal_if_present(self.driver)
             element = self.find(locator, timeout)
             element.clear()

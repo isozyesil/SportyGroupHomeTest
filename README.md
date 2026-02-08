@@ -174,4 +174,5 @@ We employ a multi-layered validation strategy to ensure both functional correctn
 -   **Resilience**: The framework automatically detects and dismisses intrusive modals (such as +18/mature content gates) that might intercept clicks, reducing test flakiness.
 -   **Standardized Timeouts**: All waits are centralized in `Config`, allowing global tuning of framework performance.
 -   **Detailed Assertions**: Custom assertion messages provide clear feedback on failure causes (e.g., missing JSON keys or incorrect status codes).
+-   **Integrated Logging**: A centralized logging system that records API requests/responses (including body on failures) and UI interactions (clicks, findings) to facilitate rapid debugging.
 -   **Clean Test Code**: Tests are written in a declarative style, focusing on the "what" rather than the "how" of automation.
