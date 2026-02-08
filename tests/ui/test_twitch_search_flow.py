@@ -1,4 +1,3 @@
-from ui import Config
 import pytest
 
 
