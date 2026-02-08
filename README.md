@@ -115,7 +115,7 @@ pytest
 
 | Test ID | Name | Steps | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
-| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv Mobile Web<br>2. Click 'Browse' button<br>3. Enter "StarCraft II" in the Search input<br>4. Select "StarCraft II" from search results<br>5. Scroll down to load live streamers<br>6. Click on a random live streamer | 1. Verify stream is live (Video player active)<br>2. Capture verification screenshot<br>3. Log detailed interaction steps | Ensures the core user journey of discovery and playback is functional on mobile web. |
+| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv Mobile Web<br>2. Dismiss initial overlay<br>3. Click 'Browse' button<br>4. Enter "StarCraft II" in the Search input<br>5. Select "StarCraft II" from search results<br>6. Scroll down to load live streamers<br>7. Click on a random live streamer | 1. Verify stream is live (Video player active)<br>2. Capture verification screenshot<br>3. Log detailed interaction steps | Ensures the core user journey of discovery and playback is functional on mobile web. |
 
 ### 🌐 API Tests (Football API)
 
@@ -157,7 +157,7 @@ tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[API-05_Country_
 tests/api/test_get_leagues_api.py::test_api_failure_logging_mechanism PASSED
 tests/ui/test_twitch_search_flow.py::test_search_and_open_streamer[StarCraft II] PASSED
 
-============================== 7 passed in 58.12s ==============================
+============================== 7 passed in 46.32s ==============================
 ```
 
 ---
