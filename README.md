@@ -41,16 +41,19 @@ The framework follows a modular, layered architecture designed for maintainabili
 SportyGroupHomeTest/
 ├── api/                # API Client and Core Logic
 │   ├── core/           # Config, Client, Endpoints, Status Codes
-│   └── utils/          # API-specific Assertions
+│   └── utils/          # API-specific Assertions, Logger
 ├── ui/                 # UI Automation Layer (POM)
 │   ├── core/           # Config, Driver Factory
 │   ├── pages/          # Page Objects & Container
 │   └── utils/          # Modal, Wait, Scrolling, Screenshot Utils
 ├── tests/              # Test Suites
 │   ├── api/            # API Test Cases
-│   └── ui/             # UI Test Cases
+│   ├── ui/             # UI Test Cases
+│   └── fixtures/       # Shared Fixtures
 ├── Screenshots/        # Automated Test Evidence
 ├── conftest.py         # Global Pytest Fixtures
+├── framework.log       # Unified Execution Logs
+├── pytest.ini          # Test Configuration
 ├── requirements.txt    # Project Dependencies
 └── README.md           # Documentation
 ```
@@ -112,7 +115,7 @@ pytest
 
 | Test ID | Name | Steps | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
-| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv Mobile Web<br>2. Click 'Browse' button<br>3. Enter "StarCraft II" in the Search input<br>4. Select "StarCraft II" from search results<br>5. Scroll down to load live streamers<br>6. Click on a random live streamer | 1. Verify stream is live (Video player active)<br>2. Capture verification screenshot | Ensures the core user journey of discovery and playback is functional on mobile web. |
+| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv Mobile Web<br>2. Click 'Browse' button<br>3. Enter "StarCraft II" in the Search input<br>4. Select "StarCraft II" from search results<br>5. Scroll down to load live streamers<br>6. Click on a random live streamer | 1. Verify stream is live (Video player active)<br>2. Capture verification screenshot<br>3. Log detailed interaction steps | Ensures the core user journey of discovery and playback is functional on mobile web. |
 
 ### 🌐 API Tests (Football API)
 
@@ -123,6 +126,7 @@ pytest
 | API-03 | Leagues ID Filtering | `/leagues?id=39` | Returns result when filtered by ID | Verifies specific ID filtering logic. |
 | API-04 | Leagues Name Filtering | `/leagues?name=Premier League` | Returns result when filtered by name | Verifies name-based filtering logic. |
 | API-05 | Leagues Country Filtering | `/leagues?country=England` | Returns results when filtered by country | Verifies country-based filtering logic. |
+| API-06 | Failure Logging | N/A | Full response body logged on 4xx/5xx or quota error | Ensures rapid diagnostics for API-side issues. |
 
 ---
 
@@ -136,7 +140,7 @@ pytest
 ### 💻 Console Results (API + UI)
 ![Terminal Test Execution](terminal_execution.gif)
 
-*Figure 2: Real-time terminal output with green status indicators for all passed tests.*
+*Figure 2: Real-time terminal output showing parametrized API tests and unified results.*
 
 ```text
 ============================= test session starts ==============================
@@ -181,8 +185,9 @@ We employ a multi-layered validation strategy to ensure both functional correctn
     -   **UI**: On test failure, a screenshot prefixed with `FAILURE_` is automatically captured to provide instant visual evidence of the error state.
     -   **API**: If a request fails (status >= 400 or quota exceeded), the full response body is automatically logged to the framework log for immediate inspection.
 -   **Integrated Logging System**: 
-    -   All execution details (API requests/responses, UI clicks, element finding) are persisted to `framework.log`.
-    -   Provides a unified timeline of events across both API and UI test layers.
+    -   All execution details (API requests/responses, UI clicks, element finding, and business logic) are persisted to `framework.log`.
+    -   Provides a unified timeline of events across both API and UI test layers, making cross-layer issues easier to debug.
+    -   Configured with both Console and File handlers for real-time and persistent visibility.
 -   **Resilience**: The framework automatically detects and dismisses intrusive modals (such as +18/mature content gates) that might intercept clicks, reducing test flakiness.
 -   **Standardized Timeouts**: All waits are centralized in `Config`, allowing global tuning of framework performance.
 -   **Detailed Assertions**: Custom assertion messages provide clear feedback on failure causes (e.g., missing JSON keys or incorrect status codes).
