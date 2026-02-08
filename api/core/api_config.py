@@ -3,7 +3,7 @@ import os
 
 class ApiConfig:
     BASE_URL = os.getenv("API_BASE_URL", "https://v3.football.api-sports.io")
-    API_KEY = os.getenv("API_KEY", "022308117e1535e2d0b5c6082ea7272a")
+    API_KEY = os.getenv("API_KEY", "7f4b222a7bc18361e7fd0138a7960cc5")
     TIMEOUT = int(os.getenv("API_TIMEOUT", "20"))
     RETRIES = int(os.getenv("API_RETRIES", "2"))
 

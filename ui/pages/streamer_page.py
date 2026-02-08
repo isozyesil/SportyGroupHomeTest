@@ -1,6 +1,7 @@
 import random
 from selenium.webdriver.common.by import By
 from ui.pages.base_page import BasePage
+from api.utils.logger import logger
 from ui.utils import take_screenshot
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -20,12 +21,14 @@ class StreamerPage(BasePage):
         take_screenshot(self.driver, test_name)
 
     def click_random_streamer(self):
+        logger.info("Selecting a random streamer")
         streamers = self.find_elements(self.ALL_STREAMER_CARDS)
         assert streamers, "No streamer cards found"
         target = random.choice(streamers)
         self.js_click(target)
 
     def verify_stream_is_live(self):
+        logger.info("Verifying stream is live")
         self._click_video_stream()
         self.wait_until_loaded()
         return True

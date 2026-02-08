@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from ui.pages.base_page import BasePage
+from api.utils.logger import logger
 
 
 class HomePage(BasePage):
@@ -19,6 +20,7 @@ class HomePage(BasePage):
         self.type(self.SEARCH_TEXTBOX, game_name)
 
     def search_and_select_game(self, game_name):
+        logger.info(f"Searching and selecting game: {game_name}")
         self.click_search()
         self.search_for_game(game_name)
         self.click_first_search_result_with_text(game_name)

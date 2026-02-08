@@ -16,7 +16,7 @@ The framework provides automated coverage for:
 The framework follows a modular, layered architecture designed for maintainability, readability, and DRY (Don't Repeat Yourself) standards.
 
 ### 1. UI Automation (Page Object Model)
--   **`BasePage`**: The core foundation providing abstracted Selenium interactions (`find`, `click`, `type`, `js_click`) with built-in "Self-Healing" capabilities (automatic modal dismissal on intercept).
+-   **`BasePage`**: The core foundation providing abstracted Selenium interactions (`find`, `click`, `type`, `js_click`) with built-in "Self-Healing" capabilities. It uses a centralized retry mechanism (`_execute_with_retry`) to automatically handle and dismiss modals when interactions are intercepted, ensuring DRY code across all Page Objects.
 -   **Page Objects**: (`HomePage`, `StreamerPage`) Encapsulate page-specific locators and high-level business logic.
 -   **`Pages` Container**: A centralized registry for all Page Objects, automatically handled via Pytest fixtures for clean test injection.
 -   **Mobile Emulation**: Configured via `driver_factory` to target specific mobile devices (default: Pixel 2), as Twitch automation is optimized for the mobile web experience.
@@ -112,15 +112,17 @@ pytest
 
 | Test ID | Name | Steps | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
-| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv Mobile Web<br>2. Click 'Browse' (Search) icon<br>3. Search for "StarCraft II"<br>4. Select the game from the search results<br>5. Scroll down to load live streamers<br>6. Click on a random live streamer | 1. Verify stream is live (Video player active)<br>2. Capture verification screenshot | Ensures the core user journey of discovery and playback is functional on mobile web. |
+| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv Mobile Web<br>2. Click 'Browse' button<br>3. Enter "StarCraft II" in the Search input<br>4. Select "StarCraft II" from search results<br>5. Scroll down to load live streamers<br>6. Click on a random live streamer | 1. Verify stream is live (Video player active)<br>2. Capture verification screenshot | Ensures the core user journey of discovery and playback is functional on mobile web. |
 
 ### 🌐 API Tests (Football API)
 
 | Test ID | Name | Endpoint | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | API-01 | Get Leagues Status Code | `/leagues` | HTTP 200 OK | Basic availability check for the leagues endpoint. |
-| API-02 | Leagues Schema Validation | `/leagues` | 1. Root contains `response`<br>2. `response` is a non-empty list<br>3. Items contain `league`, `country`, `seasons` | Ensures data integrity and contract adherence for downstream consumers. |
-| API-03 | Leagues Filtering | `/leagues` | 1. Returns results without filters<br>2. Returns results when filtered by name (e.g., "Premier League") | Verifies the query parameter logic and server-side filtering functionality. |
+| API-02 | Leagues Schema Validation | `/leagues` | 1. Root contains `response`<br>2. `response` is a list<br>3. Items contain `league`, `country`, `seasons` | Ensures data integrity and contract adherence. |
+| API-03 | Leagues ID Filtering | `/leagues?id=39` | Returns result when filtered by ID | Verifies specific ID filtering logic. |
+| API-04 | Leagues Name Filtering | `/leagues?name=Premier League` | Returns result when filtered by name | Verifies name-based filtering logic. |
+| API-05 | Leagues Country Filtering | `/leagues?country=England` | Returns results when filtered by country | Verifies country-based filtering logic. |
 
 ---
 

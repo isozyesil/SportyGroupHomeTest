@@ -50,7 +50,8 @@ class ApiClient:
                 if resp.status_code == 200:
                     try:
                         body = resp.json()
-                        if body.get("errors") and ("limit" in str(body.get("errors")).lower() or "quota" in str(body.get("errors")).lower()):
+                        # Sports API often returns errors inside 200 OK
+                        if body.get("errors"):
                             should_log_body = True
                     except:
                         pass

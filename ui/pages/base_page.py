@@ -21,27 +21,27 @@ class BasePage:
         logger.info(f"Finding elements: {locator}")
         return self.wait_for_elements(locator, timeout)
 
+    def _execute_with_retry(self, action, locator, timeout=None):
+        try:
+            return action()
+        except (ElementClickInterceptedException, ElementNotInteractableException):
+            logger.warning(f"Action intercepted for {locator}, attempting modal dismissal")
+            dismiss_modal_if_present(self.driver)
+            return action()
+
     def click(self, locator, timeout=None):
         logger.info(f"Clicking on: {locator}")
-        try:
-            self.wait_for_clickable(locator, timeout).click()
-        except (ElementClickInterceptedException, ElementNotInteractableException):
-            logger.warning(f"Click intercepted for {locator}, attempting modal dismissal")
-            dismiss_modal_if_present(self.driver)
-            self.wait_for_clickable(locator, timeout).click()
+        self._execute_with_retry(lambda: self.wait_for_clickable(locator, timeout).click(), locator)
 
     def type(self, locator, text, timeout=None):
         logger.info(f"Typing '{text}' into: {locator}")
-        try:
+
+        def _type_action():
             element = self.find(locator, timeout)
             element.clear()
             element.send_keys(text)
-        except (ElementClickInterceptedException, ElementNotInteractableException):
-            logger.warning(f"Type intercepted for {locator}, attempting modal dismissal")
-            dismiss_modal_if_present(self.driver)
-            element = self.find(locator, timeout)
-            element.clear()
-            element.send_keys(text)
+
+        self._execute_with_retry(_type_action, locator)
 
     def wait_for_visibility(self, locator, timeout=None):
         return wait_until(
@@ -85,6 +85,9 @@ class BasePage:
     def js_click(self, element_or_locator):
         element = element_or_locator
         if isinstance(element_or_locator, tuple):
+            logger.info(f"JS Clicking on: {element_or_locator}")
             element = self.find(element_or_locator)
+        else:
+            logger.info("JS Clicking on element object")
         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
         self.driver.execute_script("arguments[0].click();", element)

@@ -6,7 +6,9 @@ from api import Endpoints, HttpStatus, assert_has_keys
     "query_params, expected_min_results",
     [
         ({}, 1),
+        ({"id": 39}, 1),
         ({"name": "Premier League"}, 1),
+        ({"country": "England"}, 1),
     ]
 )
 def test_get_leagues_parametrized(api_client, query_params, expected_min_results):

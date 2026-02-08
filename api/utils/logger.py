@@ -16,6 +16,11 @@ class FrameworkLogger:
             ch = logging.StreamHandler(sys.stdout)
             ch.setFormatter(formatter)
             logger.addHandler(ch)
+
+            # File Handler
+            fh = logging.FileHandler("framework.log", mode="a")
+            fh.setFormatter(formatter)
+            logger.addHandler(fh)
             
             # Prevent double logging if parent loggers have handlers
             logger.propagate = False
