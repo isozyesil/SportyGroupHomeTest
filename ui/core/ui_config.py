@@ -2,6 +2,7 @@ import os
 
 
 class Config:
+    ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     BASE_URL = os.getenv("BASE_URL", "https://www.twitch.tv")
 
     BROWSER = os.getenv("BROWSER", "chrome")
@@ -12,4 +13,4 @@ class Config:
     PAGE_LOAD_TIMEOUT = int(os.getenv("PAGE_LOAD_TIMEOUT", "60"))
     SCROLL_PIXELS = int(os.getenv("SCROLL_PIXELS", "500"))
 
-    SCREENSHOT_DIR = os.getenv("SCREENSHOT_DIR", "Screenshots")
+    SCREENSHOT_DIR = os.path.join(ROOT_DIR, os.getenv("SCREENSHOT_DIR", "Screenshots"))

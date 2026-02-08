@@ -85,7 +85,13 @@ pytest tests/ui -v
 pytest tests/api -v
 ```
 
-### 3. Configuration
+### 3. Troubleshooting (IDE Debugging)
+If you encounter `fixture 'pages' not found` while debugging in an IDE (like PyCharm):
+1.  **Working Directory**: Ensure the IDE's Run/Debug Configuration has the **Working Directory** set to the project root (`SportyGroupHomeTest/`).
+2.  **Pytest Config**: The framework includes a `pytest.ini` at the root which helps `pytest` discover the project structure and `conftest.py` automatically.
+3.  **Packages**: We have added `__init__.py` files to the `tests/` directory tree to ensure consistent module discovery.
+
+### 4. Configuration
 Execution can be customized via environment variables:
 ```bash
 export BROWSER=chrome
