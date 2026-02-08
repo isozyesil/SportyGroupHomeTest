@@ -126,7 +126,7 @@ pytest
 | API-03 | Leagues ID Filtering | `/leagues?id=39` | Returns result when filtered by ID | Verifies specific ID filtering logic. |
 | API-04 | Leagues Name Filtering | `/leagues?name=Premier League` | Returns result when filtered by name | Verifies name-based filtering logic. |
 | API-05 | Leagues Country Filtering | `/leagues?country=England` | Returns results when filtered by country | Verifies country-based filtering logic. |
-| API-06 | Failure Logging | N/A | Full response body logged on 4xx/5xx or quota error | Ensures rapid diagnostics for API-side issues. |
+| API-06 | Failure Logging | `/non-existent-endpoint` | Full response body logged on 4xx/5xx or endpoint errors | Ensures rapid diagnostics for API-side issues. |
 
 ---
 
@@ -157,7 +157,7 @@ tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[API-05_Country_
 tests/api/test_get_leagues_api.py::test_api_failure_logging_mechanism PASSED
 tests/ui/test_twitch_search_flow.py::test_search_and_open_streamer[StarCraft II] PASSED
 
-============================== 7 passed in 46.32s ==============================
+============================== 7 passed in 44.11s ==============================
 ```
 
 ---
