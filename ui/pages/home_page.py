@@ -10,9 +10,6 @@ class HomePage(BasePage):
     KEEP_USING_WEB = (By.XPATH, "//button[p[normalize-space()='Keep using web']]")
     EMPTY_OVERLAY = (By.XPATH, "//div[contains(@class,'ScTouchActionFilter')]")
 
-    def open(self, url):
-        self.driver.get(url)
-
     def click_empty_overlay(self):
         self.click(self.EMPTY_OVERLAY)
 
