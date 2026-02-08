@@ -1,7 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
 from ui.pages.base_page import BasePage
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class HomePage(BasePage):
@@ -16,24 +14,21 @@ class HomePage(BasePage):
         self.driver.get(url)
 
     def click_empty_overlay(self):
-        self.driver.find_element(*self.EMPTY_OVERLAY).click()
+        self.click(self.EMPTY_OVERLAY)
 
     def click_search(self):
-        self.wait_for_visibility(self.BROWSE_BUTTON)
-        self.wait_for_clickable(self.BROWSE_BUTTON).click()
+        self.click(self.BROWSE_BUTTON)
 
     def search_for_game(self, game_name):
-        self._click_search_box()
-        search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)
-        search_input.clear()
-        search_input.send_keys(game_name)
+        self.type(self.SEARCH_TEXTBOX, game_name)
 
-    def _click_search_box(self):
-        search_input = self.wait_for_visibility(self.SEARCH_TEXTBOX)
-        search_input.click()
+    def search_and_select_game(self, game_name):
+        self.click_search()
+        self.search_for_game(game_name)
+        self.click_first_search_result_with_text(game_name)
 
     def click_first_search_result_with_text(self, expected_text):
-        results = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located(self.SEARCH_RESULTS))
+        results = self.find_elements(self.SEARCH_RESULTS)
         for result in results:
             if expected_text.lower() in result.text.lower():
                 result.click()

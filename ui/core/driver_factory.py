@@ -1,12 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from ui.core.ui_config import Config
+from ui.core import Config
 
 
 def create_driver():
     options = Options()
 
-    # Mobile emulation (disable by setting MOBILE_DEVICE="")
     if Config.MOBILE_DEVICE:
         options.add_experimental_option(
             "mobileEmulation",

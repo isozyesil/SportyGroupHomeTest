@@ -1,6 +1,5 @@
 import pytest
-from api.core.api_config import ApiConfig
-from api.core.api_client import ApiClient
+from api import ApiConfig, ApiClient
 
 
 @pytest.fixture(scope="session")
