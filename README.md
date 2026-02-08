@@ -173,8 +173,13 @@ We employ a multi-layered validation strategy to ensure both functional correctn
 ## 📈 Quality & Reliability Features
 
 -   **Automatic Screenshots**: Every UI test execution captures a timestamped screenshot in the `Screenshots/` directory upon completion or verification.
+-   **Automated Failure Diagnostics**: 
+    -   **UI**: On test failure, a screenshot prefixed with `FAILURE_` is automatically captured to provide instant visual evidence of the error state.
+    -   **API**: If a request fails (status >= 400 or quota exceeded), the full response body is automatically logged to the framework log for immediate inspection.
+-   **Integrated Logging System**: 
+    -   All execution details (API requests/responses, UI clicks, element finding) are persisted to `framework.log`.
+    -   Provides a unified timeline of events across both API and UI test layers.
 -   **Resilience**: The framework automatically detects and dismisses intrusive modals (such as +18/mature content gates) that might intercept clicks, reducing test flakiness.
 -   **Standardized Timeouts**: All waits are centralized in `Config`, allowing global tuning of framework performance.
 -   **Detailed Assertions**: Custom assertion messages provide clear feedback on failure causes (e.g., missing JSON keys or incorrect status codes).
--   **Integrated Logging**: A centralized logging system that records API requests/responses (including body on failures) and UI interactions (clicks, findings) to facilitate rapid debugging.
 -   **Clean Test Code**: Tests are written in a declarative style, focusing on the "what" rather than the "how" of automation.
