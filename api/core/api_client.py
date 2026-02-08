@@ -45,12 +45,10 @@ class ApiClient:
 
                 logger.info(f"API RESPONSE: {resp.status_code} ({duration:.2f}s)")
                 
-                # Log response body if it fails, or if the API returns a quota error inside a 200 OK
                 should_log_body = resp.status_code >= 400
                 if resp.status_code == 200:
                     try:
                         body = resp.json()
-                        # Sports API often returns errors inside 200 OK
                         if body.get("errors"):
                             should_log_body = True
                     except:

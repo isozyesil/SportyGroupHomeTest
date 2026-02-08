@@ -11,7 +11,7 @@ GENERIC_CLOSE_BUTTON = (By.XPATH, "//button[@aria-label='Close']")
 
 
 def dismiss_modal_if_present(driver, timeout=None):
-    timeout = timeout or 2  # Use a small timeout for rapid checks
+    timeout = timeout or 2
     try:
         wait_until(driver, EC.presence_of_element_located(CONTENT_GATE), timeout)
 

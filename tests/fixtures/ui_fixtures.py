@@ -11,7 +11,6 @@ def driver(request):
     driver = create_driver()
     yield driver
     
-    # Check if test failed
     if hasattr(request.node, "rep_call") and request.node.rep_call.failed:
         logger.error(f"TEST FAILED: {test_name}")
         from ui.utils import take_screenshot

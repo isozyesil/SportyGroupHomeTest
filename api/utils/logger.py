@@ -21,9 +21,6 @@ class FrameworkLogger:
             fh = logging.FileHandler("framework.log", mode="a")
             fh.setFormatter(formatter)
             logger.addHandler(fh)
-            
-            # Prevent double logging if parent loggers have handlers
-            logger.propagate = False
 
         return logger
 
