@@ -25,6 +25,11 @@ class StreamerPage(BasePage):
         streamers = self.find_elements(self.ALL_STREAMER_CARDS)
         assert streamers, "No streamer cards found"
         target = random.choice(streamers)
+        try:
+            streamer_label = target.get_attribute("aria-label") or target.text or "<unknown>"
+        except Exception:
+            streamer_label = "<unavailable>"
+        logger.info(f"Clicking streamer card: {streamer_label}")
         self.js_click(target)
 
     def verify_stream_is_live(self):

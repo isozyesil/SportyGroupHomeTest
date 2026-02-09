@@ -115,7 +115,7 @@ pytest
 
 | Test ID | Name | Steps | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
-| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv (Mobile Emulation)<br>2. Auto-accept cookie consent if present<br>3. Click 'Browse' button<br>4. Search for "StarCraft II"<br>5. Select "StarCraft II" from results<br>6. Scroll to load live streamers<br>7. Open a random live streamer | 1. Video player visible and active<br>2. Screenshot captured after verification<br>3. Logs include interactions and overlay handling | Validates the end-to-end discovery and playback flow on mobile web with resilient overlay handling. |
+| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv (Mobile Emulation)<br>2. Auto-accept cookie consent if present<br>3. Click 'Browse' button<br>4. Search for "StarCraft II"<br>5. Select "StarCraft II" from results<br>6. Scroll to load live streamers<br>7. Open a random live streamer | 1. Video player visible and active<br>2. Screenshot captured after verification<br>3. Logs include interactions, overlay handling, and the selected streamer identity | Validates the end-to-end discovery and playback flow on mobile web with resilient overlay handling. |
 
 ### 🌐 API Tests (Football API)
 
@@ -139,19 +139,19 @@ pytest
 ### 📱 UI Test Execution (Twitch Mobile Flow)
 ![UI Test Execution](test_execution.gif)
 
-*Figure 1 (Updated 2026-02-09): Automated UI flow showing search, cookie consent handling, game selection, and stream verification.*
+*Figure 1 (Updated 2026-02-09 13:08): Automated UI flow showing search, cookie consent handling, game selection, and stream verification.*
 
 ### 💻 Console Results (API + UI)
 ![Terminal Test Execution](terminal_execution.gif)
 
-*Figure 2 (Updated 2026-02-09): Real-time terminal output showing 10 API scenarios (incl. boundary cases) and 1 UI flow (11 total).*
+*Figure 2 (Updated 2026-02-09 13:08): Real-time terminal output showing 10 API scenarios (incl. boundary cases) and 1 UI flow (11 total).*
 
 ```text
 ============================= test session starts ==============================
-platform darwin -- Python 3.12.0, pytest-9.0.2, pluggy-1.6.0
-rootdir: /Users/isozyesil/PycharmProjects/SportyGroupHomeTest
+platform win32 -- Python 3.13.5, pytest-9.0.2, pluggy-1.6.0
+rootdir: C:\Users\-\PycharmProjects\SportyGroupHomeTest
 configfile: pytest.ini
-collected 7 items
+collected 11 items
 
 tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[API-01_Status_Check] PASSED
 tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[API-02_Schema_Validation] PASSED
@@ -159,9 +159,13 @@ tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[API-03_ID_Filte
 tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[API-04_Name_Filter] PASSED
 tests/api/test_get_leagues_api.py::test_get_leagues_parametrized[API-05_Country_Filter] PASSED
 tests/api/test_get_leagues_api.py::test_api_failure_logging_mechanism PASSED
+tests/api/test_get_leagues_api.py::test_get_leagues_boundary_filters_return_empty_or_minimal[{"id": 0}] PASSED
+tests/api/test_get_leagues_api.py::test_get_leagues_boundary_filters_return_empty_or_minimal[{"id": 9999999}] PASSED
+tests/api/test_get_leagues_api.py::test_get_leagues_boundary_filters_return_empty_or_minimal[{"name": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}] PASSED
+tests/api/test_get_leagues_api.py::test_get_leagues_boundary_filters_return_empty_or_minimal[{"country": "Atlantis"}] PASSED
 tests/ui/test_twitch_search_flow.py::test_search_and_open_streamer[StarCraft II] PASSED
 
-============================== 7 passed in 44.68s ==============================
+============================= 11 passed in 58.18s ==============================
 ```
 
 ---
@@ -202,12 +206,6 @@ We employ a multi-layered validation strategy to ensure both functional correctn
 
 ---
 
-## 🗂 Interview Materials
-
-Interview-related materials are maintained in a separate document to keep this README focused:
-- See `INTERVIEW_MATERIALS.md` at the project root for guidance on unversioned interview notes and how to refresh execution GIF assets.
-
----
 
 ## 🧹 Maintenance & Code Quality (2026-02-09)
 
