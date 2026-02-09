@@ -115,7 +115,7 @@ pytest
 
 | Test ID | Name | Steps | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
-| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv Mobile Web<br>2. Dismiss initial overlay<br>3. Click 'Browse' button<br>4. Enter "StarCraft II" in the Search input<br>5. Select "StarCraft II" from search results<br>6. Scroll down to load live streamers<br>7. Click on a random live streamer | 1. Verify stream is live (Video player active)<br>2. Capture verification screenshot<br>3. Log detailed interaction steps | Ensures the core user journey of discovery and playback is functional on mobile web. |
+| UI-01 | Twitch Search & Streamer Verification | 1. Open Twitch.tv (Mobile Emulation)<br>2. Auto-accept cookie consent if present<br>3. Click 'Browse' button<br>4. Search for "StarCraft II"<br>5. Select "StarCraft II" from results<br>6. Scroll to load live streamers<br>7. Open a random live streamer | 1. Video player visible and active<br>2. Screenshot captured after verification<br>3. Logs include interactions and overlay handling | Validates the end-to-end discovery and playback flow on mobile web with resilient overlay handling. |
 
 ### 🌐 API Tests (Football API)
 
@@ -135,7 +135,7 @@ pytest
 ### 📱 UI Test Execution (Twitch Mobile Flow)
 ![UI Test Execution](test_execution.gif)
 
-*Figure 1: Automated UI flow showing search, game selection, and stream verification.*
+*Figure 1 (Updated 2026-02-09): Automated UI flow showing search, cookie consent handling, game selection, and stream verification.*
 
 ### 💻 Console Results (API + UI)
 ![Terminal Test Execution](terminal_execution.gif)
@@ -195,6 +195,13 @@ We employ a multi-layered validation strategy to ensure both functional correctn
 -   **Detailed Assertions**: Custom assertion messages provide clear feedback on failure causes (e.g., missing JSON keys or incorrect status codes).
 -   **Clean Test Code**: Tests are written in a declarative style, focusing on the "what" rather than the "how" of automation.
 
+
+---
+
+## 🗂 Interview Materials
+
+Interview-related materials are maintained in a separate document to keep this README focused:
+- See `INTERVIEW_MATERIALS.md` at the project root for guidance on unversioned interview notes and how to refresh execution GIF assets.
 
 ---
 

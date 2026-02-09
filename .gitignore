@@ -11,13 +11,14 @@ __pycache__/
 # Test artifacts
 Screenshots/
 
-# Local dev
-.venv/
+# Local dev / OS
 .idea/
-.pytest_cache/
-__pycache__/
 .DS_Store
-Screenshots/
-INTERVIEW_PREP.md
-.gitignore
+
+# Reports / local docs not intended for VCS
 report.md
+INTERVIEW_PREP.md
+
+# Unversioned interview materials
+Interview Questions.md
+Interview Questions/
