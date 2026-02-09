@@ -54,12 +54,29 @@ class ApiClient:
 
                 logger.info(f"API RESPONSE: {resp.status_code} ({duration:.2f}s)")
                 
+                # Always log body/text at INFO (truncated) for observability
                 try:
                     body = resp.json()
                     pretty = json.dumps(body, indent=2)
                     logger.info(f"RESPONSE BODY: {_truncate_for_log(pretty)}")
                 except Exception:
                     logger.info(f"RESPONSE TEXT: {_truncate_for_log(resp.text or '')}")
+
+                # Framework-level failure logging: escalate 4xx/5xx to ERROR with context
+                if resp.status_code >= 400:
+                    ctx = {
+                        "method": method.upper(),
+                        "url": url,
+                        "params": params or {},
+                        "status": resp.status_code,
+                    }
+                    try:
+                        body = resp.json()
+                        pretty = json.dumps(body, indent=2)
+                        body_str = _truncate_for_log(pretty)
+                    except Exception:
+                        body_str = _truncate_for_log(resp.text or "")
+                    logger.error(f"API ERROR: {ctx} | BODY: {body_str}")
 
                 if resp.status_code in (
                         HttpStatus.TOO_MANY_REQUESTS,

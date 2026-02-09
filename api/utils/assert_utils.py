@@ -1,6 +1,6 @@
 from api.utils.logger import logger
 import json
-from typing import Any, Iterable, Optional, Type, Union
+from typing import Any, Type, Union
 
 
 def assert_status_code(response, expected: int):
@@ -47,6 +47,13 @@ def assert_list_of_dicts(items: Any, min_len: int = 0, field_path: str = "items"
     assert_list(items, min_len=min_len, field_path=field_path)
     for i, it in enumerate(items):
         assert isinstance(it, dict), f"{field_path}[{i}] must be dict, got {type(it)}"
+
+
+def assert_int_between(value: Any, min_value: int, max_value: int, field_path: str = "value"):
+    assert isinstance(value, int), f"{field_path} must be int, got {type(value)}"
+    assert min_value <= value <= max_value, (
+        f"{field_path} must be between {min_value} and {max_value}, got {value}"
+    )
 
 
 def safe_text(response, limit: int = 500):

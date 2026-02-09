@@ -122,11 +122,15 @@ pytest
 | Test ID | Name | Endpoint | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | API-01 | Get Leagues Status Code | `/leagues` | HTTP 200 OK | Basic availability check for the leagues endpoint. |
-| API-02 | Leagues Schema & Types | `/leagues` | Root has `response` (list). Items contain `league`, `country`, `seasons`. Types: `league.id:int`, `league.name:str`, `league.type:str`, `league.logo:(str|None)`; `country.(name|code|flag):(str|None)`; `seasons:list[dict]` with `year:int`, `start:(str|None)`, `end:(str|None)`, `current:(bool|int)` | Ensures data integrity and contract adherence with type safety. |
+| API-02 | Leagues Schema & Types | `/leagues` | Root has `response` (list). Items contain `league`, `country`, `seasons`. Types: `league.id:int`, `league.name:str`, `league.type:str`, `league.logo:(str|None)`; `country.(name|code|flag):(str|None)`; `seasons:list[dict]` with `year:int (1900–2100)`, `start:(str|None)`, `end:(str|None)`, `current:(bool|int)` | Ensures data integrity and contract adherence with type safety and sane bounds. |
 | API-03 | Leagues ID Filtering | `/leagues?id=39` | All returned items have `league.id == 39` | Verifies specific ID filtering logic. |
 | API-04 | Leagues Name Filtering | `/leagues?name=Premier League` | All returned items match the exact league name (case-insensitive) | Verifies name-based filtering logic. |
 | API-05 | Leagues Country Filtering | `/leagues?country=England` | All returned items have `country.name == England` (case-insensitive) | Verifies country-based filtering logic. |
-| API-06 | Failure Logging | `/non-existent-endpoint` | Safely truncated error body logged (max 2000 chars) on 4xx/5xx or endpoint errors | Ensures rapid diagnostics for API-side issues without log flooding. |
+| API-06 | Failure Logging (Framework-Level) | `/non-existent-endpoint` | Framework logs 4xx/5xx at ERROR with truncated body (max 2000 chars) and request context; tests do not assert logs directly | Ensures rapid diagnostics without coupling tests to logging output. |
+| API-07 | Boundary: Non-existent ID (0) | `/leagues?id=0` | Response is a list with length 0 | Validates backend returns empty results for out-of-range IDs. |
+| API-08 | Boundary: Very Large ID | `/leagues?id=9999999` | Response is a list with length 0 | Ensures server gracefully handles very large numeric filters. |
+| API-09 | Boundary: Huge/Random Name | `/leagues?name=XXXXXXXX...(100x)` | Response is a list with length 0 | Ensures text filters with unrealistic inputs return no results without error. |
+| API-10 | Boundary: Non-existent Country | `/leagues?country=Atlantis` | Response is a list with length 0 | Validates nonexistent country filters return empty results. |
 
 ---
 
@@ -140,7 +144,7 @@ pytest
 ### 💻 Console Results (API + UI)
 ![Terminal Test Execution](terminal_execution.gif)
 
-*Figure 2: Real-time terminal output showing 6 distinct API test scenarios and 1 UI test flow (7 items total).*
+*Figure 2 (Updated 2026-02-09): Real-time terminal output showing 10 API scenarios (incl. boundary cases) and 1 UI flow (11 total).*
 
 ```text
 ============================= test session starts ==============================

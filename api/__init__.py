@@ -8,6 +8,7 @@ from api.utils.assert_utils import (
     assert_optional_type,
     assert_list,
     assert_list_of_dicts,
+    assert_int_between,
 )
 
 __all__ = [
@@ -21,4 +22,5 @@ __all__ = [
     "assert_optional_type",
     "assert_list",
     "assert_list_of_dicts",
+    "assert_int_between",
 ]

@@ -7,6 +7,7 @@ from api import (
     assert_optional_type,
     assert_list,
     assert_list_of_dicts,
+    assert_int_between,
 )
 
 
@@ -61,6 +62,7 @@ def test_get_leagues_parametrized(api_client, test_id, query_params, expected_mi
             s0 = seasons[0]
             assert_has_keys(s0, ["year", "start", "end", "current"])  # others like coverage exist but optional here
             assert_is_type(s0["year"], int, "seasons[0].year")
+            assert_int_between(s0["year"], 1900, 2100, "seasons[0].year")
             assert_optional_type(s0.get("start"), str, "seasons[0].start")
             assert_optional_type(s0.get("end"), str, "seasons[0].end")
             # current is typically a boolean
@@ -92,4 +94,25 @@ def test_get_leagues_parametrized(api_client, test_id, query_params, expected_mi
 
 
 def test_api_failure_logging_mechanism(api_client):
-    api_client.get("non-existent-endpoint")
+    # This test intentionally calls an invalid endpoint; framework-level logging will record details.
+    # We don't assert status code here because this API may return 200 with an error payload.
+    resp = api_client.get("non-existent-endpoint")
+    assert resp is not None
+
+
+@pytest.mark.parametrize(
+    "query_params",
+    [
+        {"id": 0},
+        {"id": 9999999},
+        {"name": "X" * 100},
+        {"country": "Atlantis"},
+    ]
+)
+def test_get_leagues_boundary_filters_return_empty_or_minimal(api_client, query_params):
+    resp = api_client.get(Endpoints.LEAGUES, params=query_params, expected_status=HttpStatus.OK)
+    data = resp.json()
+    assert_has_keys(data, ["response"])
+    assert_is_type(data["response"], list, "response")
+    # For boundary/nonexistent filters, API should return 0 results
+    assert len(data["response"]) == 0, f"Expected 0 results for boundary filter {query_params}, got {len(data['response'])}"
