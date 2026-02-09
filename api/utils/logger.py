@@ -12,17 +12,14 @@ class FrameworkLogger:
                 '%(asctime)s - %(levelname)s - [%(name)s] - %(message)s'
             )
 
-            # Console Handler
             ch = logging.StreamHandler(sys.stdout)
             ch.setFormatter(formatter)
             logger.addHandler(ch)
 
-            # File Handler
             fh = logging.FileHandler("framework.log", mode="a")
             fh.setFormatter(formatter)
             logger.addHandler(fh)
 
         return logger
 
-# Global logger instance
 logger = FrameworkLogger.get_logger()

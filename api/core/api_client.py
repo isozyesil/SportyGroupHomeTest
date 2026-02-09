@@ -5,6 +5,15 @@ from api.utils import assert_status_code
 from api.utils.logger import logger
 from api.core.http_status import HttpStatus
 
+_MAX_LOG_BODY_CHARS = 2000
+
+def _truncate_for_log(text: str) -> str:
+    if text is None:
+        return ""
+    if len(text) > _MAX_LOG_BODY_CHARS:
+        return text[:_MAX_LOG_BODY_CHARS] + f"... [truncated {len(text) - _MAX_LOG_BODY_CHARS} chars]"
+    return text
+
 
 class ApiClient:
 
@@ -45,12 +54,12 @@ class ApiClient:
 
                 logger.info(f"API RESPONSE: {resp.status_code} ({duration:.2f}s)")
                 
-                # Log response body
                 try:
                     body = resp.json()
-                    logger.info(f"RESPONSE BODY: {json.dumps(body, indent=2)}")
-                except:
-                    logger.info(f"RESPONSE TEXT: {resp.text}")
+                    pretty = json.dumps(body, indent=2)
+                    logger.info(f"RESPONSE BODY: {_truncate_for_log(pretty)}")
+                except Exception:
+                    logger.info(f"RESPONSE TEXT: {_truncate_for_log(resp.text or '')}")
 
                 if resp.status_code in (
                         HttpStatus.TOO_MANY_REQUESTS,
@@ -80,7 +89,7 @@ class ApiClient:
         return resp
 
     def post(self, path: str, json_data: dict | None = None, params: dict | None = None, expected_status: int | None = None):
-        resp = self.request("POST", path, params=params, json=json_data)
+        resp = self.request("POST", path, params=params, json_data=json_data)
         if expected_status:
             assert_status_code(resp, expected_status)
         return resp

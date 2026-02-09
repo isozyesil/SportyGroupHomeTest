@@ -122,11 +122,11 @@ pytest
 | Test ID | Name | Endpoint | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | API-01 | Get Leagues Status Code | `/leagues` | HTTP 200 OK | Basic availability check for the leagues endpoint. |
-| API-02 | Leagues Schema Validation | `/leagues` | 1. Root contains `response`<br>2. `response` is a list<br>3. Items contain `league`, `country`, `seasons` | Ensures data integrity and contract adherence. |
-| API-03 | Leagues ID Filtering | `/leagues?id=39` | Returns result when filtered by ID | Verifies specific ID filtering logic. |
-| API-04 | Leagues Name Filtering | `/leagues?name=Premier League` | Returns result when filtered by name | Verifies name-based filtering logic. |
-| API-05 | Leagues Country Filtering | `/leagues?country=England` | Returns results when filtered by country | Verifies country-based filtering logic. |
-| API-06 | Failure Logging | `/non-existent-endpoint` | Full response body logged on 4xx/5xx or endpoint errors | Ensures rapid diagnostics for API-side issues. |
+| API-02 | Leagues Schema & Types | `/leagues` | Root has `response` (list). Items contain `league`, `country`, `seasons`. Types: `league.id:int`, `league.name:str`, `league.type:str`, `league.logo:(str|None)`; `country.(name|code|flag):(str|None)`; `seasons:list[dict]` with `year:int`, `start:(str|None)`, `end:(str|None)`, `current:(bool|int)` | Ensures data integrity and contract adherence with type safety. |
+| API-03 | Leagues ID Filtering | `/leagues?id=39` | All returned items have `league.id == 39` | Verifies specific ID filtering logic. |
+| API-04 | Leagues Name Filtering | `/leagues?name=Premier League` | All returned items match the exact league name (case-insensitive) | Verifies name-based filtering logic. |
+| API-05 | Leagues Country Filtering | `/leagues?country=England` | All returned items have `country.name == England` (case-insensitive) | Verifies country-based filtering logic. |
+| API-06 | Failure Logging | `/non-existent-endpoint` | Safely truncated error body logged (max 2000 chars) on 4xx/5xx or endpoint errors | Ensures rapid diagnostics for API-side issues without log flooding. |
 
 ---
 
@@ -194,3 +194,15 @@ We employ a multi-layered validation strategy to ensure both functional correctn
 -   **Standardized Timeouts**: All waits are centralized in `Config`, allowing global tuning of framework performance.
 -   **Detailed Assertions**: Custom assertion messages provide clear feedback on failure causes (e.g., missing JSON keys or incorrect status codes).
 -   **Clean Test Code**: Tests are written in a declarative style, focusing on the "what" rather than the "how" of automation.
+
+
+---
+
+## 🧹 Maintenance & Code Quality (2026-02-09)
+
+- DRY: Consolidated API response body logging into a single helper (`_truncate_for_log`) in `api/core/api_client.py` to avoid duplication and keep behavior consistent across JSON/text responses.
+- Log Hygiene: Response bodies are safely truncated to a maximum of 2000 characters to prevent console/file flooding during tests. Adjust `_MAX_LOG_BODY_CHARS` in `api/core/api_client.py` if you need more/less verbosity.
+- Minor Correctness: Fixed `ApiClient.post()` to pass `json_data` correctly to the underlying `request()` method.
+- API Data Validation: Added reusable helpers in `api/utils/assert_utils.py` (`assert_is_type`, `assert_optional_type`, `assert_list`, `assert_list_of_dicts`) and exported them via `api/__init__.py` for easy imports. Tests now validate both structure and data types for leagues, seasons, and country fields.
+- README Updates: Refined the API test table and descriptions to reflect type validations and safe error-body truncation.
+- Comment Cleanup: Removed redundant comments across the framework to keep code concise and self-explanatory.
