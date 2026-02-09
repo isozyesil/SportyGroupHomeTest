@@ -122,7 +122,7 @@ pytest
 | Test ID | Name | Endpoint | Validations | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | API-01 | Get Leagues Status Code | `/leagues` | HTTP 200 OK | Basic availability check for the leagues endpoint. |
-| API-02 | Leagues Schema & Types | `/leagues` | Root has `response` (list). Items contain `league`, `country`, `seasons`. Types: `league.id:int`, `league.name:str`, `league.type:str`, `league.logo:(str|None)`; `country.(name|code|flag):(str|None)`; `seasons:list[dict]` with `year:int (1900–2100)`, `start:(str|None)`, `end:(str|None)`, `current:(bool|int)` | Ensures data integrity and contract adherence with type safety and sane bounds. |
+| API-02 | Leagues Schema & Types | `/leagues` | Root has `response` (list). Items contain `league`, `country`, `seasons`. Types: `league.id:int`, `league.name:str`, `league.type:str`, `league.logo:(str|None)`; `country.(name|code|flag):(str|None)`; `seasons:list[dict]` with `year:int (1900–2100)`, `start:(str|None)`, `end:(str|None)`, `current:(bool|int)` | Confirms the payload contract and field types for `/leagues`: enforces required keys, permits documented nullable fields, validates realistic season year bounds, and tolerates API `current` as `bool` or `int` when exposed as int-bool. |
 | API-03 | Leagues ID Filtering | `/leagues?id=39` | All returned items have `league.id == 39` | Verifies specific ID filtering logic. |
 | API-04 | Leagues Name Filtering | `/leagues?name=Premier League` | All returned items match the exact league name (case-insensitive) | Verifies name-based filtering logic. |
 | API-05 | Leagues Country Filtering | `/leagues?country=England` | All returned items have `country.name == England` (case-insensitive) | Verifies country-based filtering logic. |
@@ -139,12 +139,12 @@ pytest
 ### 📱 UI Test Execution (Twitch Mobile Flow)
 ![UI Test Execution](test_execution.gif)
 
-*Figure 1 (Updated 2026-02-09 13:08): Automated UI flow showing search, cookie consent handling, game selection, and stream verification.*
+*Figure 1 (Updated 2026-02-09 13:23): Automated UI flow showing search, cookie consent handling, game selection, and stream verification.*
 
 ### 💻 Console Results (API + UI)
 ![Terminal Test Execution](terminal_execution.gif)
 
-*Figure 2 (Updated 2026-02-09 13:08): Real-time terminal output showing 10 API scenarios (incl. boundary cases) and 1 UI flow (11 total).*
+*Figure 2 (Updated 2026-02-09 13:23): Real-time terminal output showing 10 API scenarios (incl. boundary cases) and 1 UI flow (11 total).*
 
 ```text
 ============================= test session starts ==============================
@@ -165,7 +165,7 @@ tests/api/test_get_leagues_api.py::test_get_leagues_boundary_filters_return_empt
 tests/api/test_get_leagues_api.py::test_get_leagues_boundary_filters_return_empty_or_minimal[{"country": "Atlantis"}] PASSED
 tests/ui/test_twitch_search_flow.py::test_search_and_open_streamer[StarCraft II] PASSED
 
-============================= 11 passed in 58.18s ==============================
+============================= 11 passed in 66.65s ==============================
 ```
 
 ---
